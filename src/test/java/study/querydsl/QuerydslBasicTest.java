@@ -647,4 +647,34 @@ public class QuerydslBasicTest {
                 .execute();
     }
 
+    @Test
+    public void sqlFuction(){
+        List<String> result = queryFactory
+                .select(Expressions.stringTemplate(
+                        "function('replace', {0}, {1}, {2})",
+                        member.username, "member", "M"))
+                .from(member)
+                .fetch();
+
+        for(String s: result){
+            System.out.println("s = " + s);
+        }
+    }
+
+    // 소문자 변경
+    @Test
+    public void sqlFuction2(){
+        List<String> result = queryFactory
+                .select(member.username)
+                .from(member)
+                //.where(member.username.eq(
+                //        Expressions.stringTemplate("function('lower', {0})", member.username)))
+                .where(member.username.eq(member.username.lower())) // ansi 표준 펑션은 기본적으로 제공됨
+                .fetch();
+
+        for(String s: result){
+            System.out.println("s = " + s);
+        }
+
+    }
 }
