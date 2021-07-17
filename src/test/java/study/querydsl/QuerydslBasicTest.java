@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import study.querydsl.dto.MemberDto;
+import study.querydsl.dto.QMemberDto;
 import study.querydsl.dto.UserDto;
 import study.querydsl.entity.Member;
 import study.querydsl.entity.QMember;
@@ -536,6 +537,22 @@ public class QuerydslBasicTest {
 
         for(UserDto userDto : result){
             System.out.println("userDto = " + userDto);
+        }
+    }
+
+    // Constructor는 컴파일 오류를 잡지 못하지만,
+    // QueryProjection 는 작성 당시에 컴파일 오류를 잡을 수 있다.
+    // 생성자 호출도 보증해줌
+    // but, Q파일을 생성해줘야하며, Dto가 쿼리dsl에 의존성을 가지게됨
+    @Test
+    public void findDtoByQueryProjection(){
+        List<MemberDto> result = queryFactory
+                .select(new QMemberDto(member.username, member.age))
+                .from(member)
+                .fetch();
+
+        for(MemberDto memberDto : result){
+            System.out.println("memberDto = " + memberDto);
         }
     }
 
