@@ -9,9 +9,16 @@ ex)
     }
 ```
 
-### 날짜 사이의 기간(일) 구하기
+### 날짜(LocalDateTime) 사이의 기간(일) 구하기
 ex)
 ```java
-  NumberTemplate<BigInteger> dateNumberTemplate = Expressions.numberTemplate
-        (BigInteger.class, "datediff({0}, {1})", startDateTime, endDateTime);
+  NumberTemplate<BigInteger> dateNumberTemplate = Expressions.numberTemplate(
+        BigInteger.class, "datediff({0}, {1})", startDateTime, endDateTime);
+```
+
+### 날짜(LocalDateTime) 숫자로 변환
+ex)
+```java
+  NumberTemplate<Long> nowLongNumberTemplate = Expressions.numberTemplate(
+        Long.class, "UNIX_TIMESTAMP({0})", LocalDateTime.now());
 ```
